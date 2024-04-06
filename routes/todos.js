@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-
+var createError = require('http-errors')
 
 /* GET todos listing. */
 router.get('/', function(req, res, next) {
@@ -33,7 +33,7 @@ router.get('/:todoId', function(req, res, next) {
     if (todo) {
         res.json(todo); // Return the todo if found
     } else {
-        res.status(404).json({ message: 'Todo not found' }); // Return 404 if todo is not found
+        createError(404, 'Todo not found')
     }
 });
 
