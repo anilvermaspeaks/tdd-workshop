@@ -17,5 +17,19 @@ router.get('/', function(req, res, next) {
  );
 });
 
+router.post('/', function(req, res, next) {
+
+
+    const { body } = req;
+   
+   
+    return res.status(201)
+    .header('Location', req.url+ body.id )
+    .json(body);
+   
+   
+   });
+   
+
 
 module.exports = router;
