@@ -59,7 +59,6 @@ describe('Todos API', () =>{
     });
 
   
-
     it('should return the todo with the given ID', async () => {
         const todoId = 123; // Assuming the ID of the todo you want to retrieve
         
@@ -71,6 +70,70 @@ describe('Todos API', () =>{
         expect(response.body.id).toBe(todoId);
         expect(response.body.name).toBe("1st Todo");
         expect(response.body.done).toBe(false);
+    });
+
+
+    it('should return 404 if todo with the given ID is not found while deleting', async () => {
+        const todoId = 999; // Assuming a non-existent ID
+        
+        const response = await request(app)
+            .delete(`/todos/${todoId}`)
+            .expect(404);
+
+        // Assert the response body contains the error message
+        expect(response.body.message).toBe('Todo not found');
+    });
+
+    it('should delete the todo with the given ID', async () => {
+        const todoId = 123;
+        
+        const response = await request(app)
+            .delete(`/todos/${todoId}`)
+            .expect(200);
+        
+        expect(response.body.message).toBe('Todo deleted successfully');
+        
+    });
+
+    it('should update the todo with the given ID', async () => {
+        const todoId = 123; // Assuming the ID of the todo you want to update
+        const updatedTodo = {
+            id: todoId,
+            name: "Updated Todo",
+            targetDate: new Date(),
+            done: true
+        };
+
+        const response = await request(app)
+            .put(`/todos/${todoId}`)
+            .send(updatedTodo)
+            .expect(200);
+            expect(response.body.updatedTodo).toEqual(
+                expect.objectContaining(
+                    {
+                        id: expect.any(Number),
+                        name: expect.any(String),
+                        targetDate: expect.any(String),
+                        done: expect.any(Boolean)
+                    }
+            ));
+        expect(response.body.message).toBe('Todo updated successfully');
+    });
+
+    it('should return 404 if todo with the given ID is not found', async () => {
+        const todoId = 109; 
+        const updatedTodo = {
+            id: todoId,
+            name: "Updated Todo",
+            targetDate: new Date(),
+            done: true
+        };
+
+        const response = await request(app)
+            .put(`/todos/${todoId}`)
+            .send(updatedTodo)
+            .expect(404);
+        expect(response.body.message).toBe('Todo not found');
     });
 
  });
