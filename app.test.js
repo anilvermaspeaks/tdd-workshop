@@ -57,6 +57,22 @@ describe('Todos API', () =>{
             ));
         });
     });
+
+  
+
+    it('should return the todo with the given ID', async () => {
+        const todoId = 123; // Assuming the ID of the todo you want to retrieve
+        
+        const response = await request(app)
+            .get(`/todos/${todoId}`)
+            .expect(200);
+        
+        // Assert the response body contains the correct todo
+        expect(response.body.id).toBe(todoId);
+        expect(response.body.name).toBe("1st Todo");
+        expect(response.body.done).toBe(false);
+    });
+
  });
  
  
