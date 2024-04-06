@@ -5,21 +5,22 @@ var router = express.Router();
 var createError = require('http-errors')
 
 /* GET todos listing. */
-router.get('/', function(req, res, next) {
- res.json([
-    {
-      id: 123,
-      name: "1st Todo",
-      targetDate: new Date(),
-      done: false
-    }
-  ]
- );
+router.get('/', function (req, res, next) {
+    res.json([
+        {
+            id: 123,
+            name: "1st Todo",
+            targetDate: new Date(),
+            done: false
+        }
+    ]
+    );
 });
 
-router.get('/:todoId', function(req, res, next) {
-    const todoId = parseInt(req.params.todoId); 
-   
+/* GET todo by id. */
+router.get('/:todoId', function (req, res, next) {
+    const todoId = parseInt(req.params.todoId);
+
     const todos = [
         {
             id: 123,
@@ -29,7 +30,7 @@ router.get('/:todoId', function(req, res, next) {
         }
     ];
     const todo = todos?.find(todo => todo.id === todoId);
-    
+
     if (todo) {
         res.json(todo); // Return the todo if found
     } else {
@@ -37,21 +38,17 @@ router.get('/:todoId', function(req, res, next) {
     }
 });
 
-router.post('/', function(req, res, next) {
-
-
+/* Create todo. */
+router.post('/', function (req, res, next) {
     const { body } = req;
-   
-   
     return res.status(201)
-    .header('Location', req.url+ body.id )
-    .json(body);
-   
-   
-   });
-   
-   router.delete('/:todoId', function(req, res, next) {
-    const todoId = parseInt(req.params.todoId); // Assuming the ID is passed as a route parameter
+        .header('Location', req.url + body.id)
+        .json(body);
+});
+
+/* Delete todo by id. */
+router.delete('/:todoId', function (req, res, next) {
+    const todoId = parseInt(req.params.todoId);
     let indexToDelete = -1;
     const todos = [
         {
@@ -76,8 +73,9 @@ router.post('/', function(req, res, next) {
     }
 });
 
-router.put('/:todoId', function(req, res, next) {
-    const todoId = parseInt(req.params.todoId); 
+/* Update todo by id. */
+router.put('/:todoId', function (req, res, next) {
+    const todoId = parseInt(req.params.todoId);
     const todos = [
         {
             id: 123,
@@ -86,14 +84,14 @@ router.put('/:todoId', function(req, res, next) {
             done: false
         }
     ];
-    const updatedTodo = req.body; 
+    const updatedTodo = req.body;
     const indexToUpdate = todos.findIndex(todo => todo.id === todoId);
-    
+
     if (indexToUpdate !== -1) {
         todos[indexToUpdate] = updatedTodo;
         res.json({ message: 'Todo updated successfully', updatedTodo });
     } else {
-        res.status(404).json({ message: 'Todo not found' });
+        res.status(404).json();
     }
 });
 
