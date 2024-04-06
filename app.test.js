@@ -110,5 +110,4 @@ describe('Todos API', () => {
             .send(updatedTodo)
             .expect(404);
     });
-
 });

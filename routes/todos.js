@@ -5,6 +5,7 @@ var router = express.Router();
 var createError = require('http-errors')
 
 /* GET todos listing. */
+
 router.get('/', function (req, res, next) {
     res.json([
         {
@@ -37,6 +38,7 @@ router.get('/:todoId', function (req, res, next) {
         createError(404, 'Todo not found')
     }
 });
+
 
 /* Create todo. */
 router.post('/', function (req, res, next) {
@@ -94,5 +96,6 @@ router.put('/:todoId', function (req, res, next) {
         res.status(404).json();
     }
 });
+
 
 module.exports = router;
